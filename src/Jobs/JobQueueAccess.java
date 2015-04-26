@@ -1,8 +1,10 @@
+package Jobs;
+
 import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * An individual access to a JobQueue object. Use to maintain mutual exclusion of access.
+ * An individual access to a Jobs.JobQueue object. Use to maintain mutual exclusion of access.
  *
  * Created by Matthew on 4/25/2015.
  */

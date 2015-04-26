@@ -1,10 +1,17 @@
+package Balancer;
+
+import Jobs.Job;
+import Jobs.JobQueue;
+import Jobs.JobQueueAccess;
+
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.zip.GZIPInputStream;
 
 /**
- * Requests jobs from a remote JobServer
+ * Requests jobs from a remote Balancer.JobServer
  *
  * Created by Matthew on 4/25/2015.
  */
@@ -22,34 +29,37 @@ public class JobRequester {
 
     public void Request() {
 
-        System.out.println("JobRequester opening connection to " + serverAddress + " at port " + serverPort);
+        System.out.println("Balancer.JobRequester opening connection to " + serverAddress + " at port " + serverPort);
 
         try (Socket socket = new Socket(serverAddress, serverPort);
-             ObjectInputStream stream = new ObjectInputStream(socket.getInputStream())) {
+             GZIPInputStream gzipped = new GZIPInputStream(socket.getInputStream());
+             ObjectInputStream stream = new ObjectInputStream(gzipped)) {
 
-            System.out.println("JobRequester made connection");
+
+
+            System.out.println("Balancer.JobRequester made connection");
 
             while (true) {
+
                 Job job = (Job) stream.readObject();
 
                 try (JobQueueAccess access = queue.getAccess()) {
                     queue.addJob(job);
+                    System.out.println("Jobs.Job received:" + job.toString());
                 }
 
-                System.out.println("JobRequester received job");
+                System.out.println("Balancer.JobRequester received job");
 
             }
 
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (EOFException e) {
+            System.out.println("Balancer.JobRequester has no more jobs to read.");
+        } catch (IOException|ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        System.out.println("JobRequester's connection has been closed");
+        System.out.println("Balancer.JobRequester's connection has been closed");
 
     }
 
@@ -57,6 +67,8 @@ public class JobRequester {
 
         final JobQueue requesterQueue = new JobQueue();
         final JobQueue serverQueue = new JobQueue();
+
+        final int port = 9898;
 
         int numJobs = 8;
         int dataLength = 100;
@@ -77,7 +89,7 @@ public class JobRequester {
         Runnable requesterRunnable = new Runnable() {
             @Override
             public void run() {
-                JobRequester requester = new JobRequester("172.0.0.1", 1567, requesterQueue);
+                JobRequester requester = new JobRequester("localhost", port, requesterQueue);
                 requester.Request();
                 requester.Request();
             }
@@ -86,7 +98,7 @@ public class JobRequester {
         Runnable serverRunnable = new Runnable() {
             @Override
             public void run() {
-                JobServer server = new JobServer(1567, serverQueue);
+                JobServer server = new JobServer(port, serverQueue);
                 server.serve();
             }
         };
@@ -97,7 +109,7 @@ public class JobRequester {
         serverThread.start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

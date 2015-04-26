@@ -1,9 +1,12 @@
+package Jobs;
+
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by Matthew on 4/25/2015.
  */
-public class Job {
+public class Job implements Serializable{
 
     public boolean completed;
     public int length;
@@ -11,7 +14,7 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Job{" +
+        return "Jobs.Job{" +
                 "completed=" + completed +
                 ", length=" + length +
                 ", data=" + Arrays.toString(data) +

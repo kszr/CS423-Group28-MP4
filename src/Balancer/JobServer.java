@@ -1,10 +1,16 @@
+package Balancer;
+
+import Jobs.Job;
+import Jobs.JobQueue;
+import Jobs.JobQueueAccess;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Semaphore;
+import java.util.zip.GZIPOutputStream;
 
 /**
- * When asked for jobs, the Job Server will send back a fraction of jobs in the local queue
+ * When asked for jobs, the Jobs.Job Server will send back a fraction of jobs in the local queue
  *
  * Created by Matthew on 4/25/2015.
  */
@@ -34,12 +40,14 @@ public class JobServer {
 
     private void talk(ServerSocket listener) {
 
-        System.out.println("JobServer ready to serve on port " + portNumber);
+        System.out.println("Balancer.JobServer ready to serve on port " + portNumber);
 
         try (Socket socket = listener.accept();
-             ObjectOutputStream objStream = new ObjectOutputStream(socket.getOutputStream())) {
+             GZIPOutputStream gzipped = new GZIPOutputStream(socket.getOutputStream());
+             ObjectOutputStream objStream = new ObjectOutputStream(gzipped)) {
+            objStream.flush();
 
-            System.out.println("Incoming connection to JobServer");
+            System.out.println("Incoming connection to Balancer.JobServer");
 
 
             int jobsTaken = 0;
@@ -53,7 +61,7 @@ public class JobServer {
             e.printStackTrace();
         }
 
-        System.out.println("Closed connection that came to JobServer");
+        System.out.println("Closed connection that came to Balancer.JobServer");
 
     }
 
@@ -61,7 +69,7 @@ public class JobServer {
     private boolean sendJob(int currentNumber, ObjectOutputStream stream) throws IOException {
         Job gotten;
         try (JobQueueAccess access = queue.getAccess()) {
-            if (queue.numJobs() / 2 <= currentNumber) {
+            if ((queue.numJobs() + currentNumber) / 2 <= currentNumber) {
                 return false;
             }
 
@@ -69,6 +77,7 @@ public class JobServer {
         }
 
         stream.writeObject(gotten);
+        stream.flush();
         return true;
     }
 

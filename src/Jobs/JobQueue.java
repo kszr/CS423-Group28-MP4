@@ -1,15 +1,13 @@
-import java.io.Closeable;
-import java.io.IOException;
-import java.util.ArrayList;
+package Jobs;
+
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
 /**
- * A JobQueue holds jobs.
+ * A Jobs.JobQueue holds jobs.
  * You (should) hold the semaphore when you want to do something with it.
- * Use JobQueueAccess to do so in an automatic way.
+ * Use Jobs.JobQueueAccess to do so in an automatic way.
  *
  * Created by Matthew on 4/25/2015.
  */
