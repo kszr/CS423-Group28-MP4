@@ -45,7 +45,6 @@ public class JobServer {
         try (Socket socket = listener.accept();
              GZIPOutputStream gzipped = new GZIPOutputStream(socket.getOutputStream());
              ObjectOutputStream objStream = new ObjectOutputStream(gzipped)) {
-            objStream.flush();
 
             System.out.println("Incoming connection to Balancer.JobServer");
 

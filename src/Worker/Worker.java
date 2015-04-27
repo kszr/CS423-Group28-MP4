@@ -61,8 +61,10 @@ public class Worker {
 //        System.out.println("Starting job: " + job.index);
 
         for (int i = 0; i < job.data.length; i++) {
-            job.data[i] += 1.111111f;
-            restCheck();
+            for (int j = 0; j < 1000; j++) {
+                job.data[i] += 1.111111f;
+                restCheck();    
+            }
         }
 
         job.completed = true;

@@ -11,7 +11,7 @@ public class Job implements Serializable{
     public boolean completed;
 
     /**
-     * The starting index of this data
+     * Where this job needs to be stored at.
      */
     public int index;
     public float[] data;

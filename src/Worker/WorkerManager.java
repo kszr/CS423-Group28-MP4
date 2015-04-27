@@ -113,7 +113,7 @@ public class WorkerManager {
 
     public static void main(String[] args) {
 
-        final int numJobs = 1000*100;
+        final int numJobs = 1000*32;
         int dataLength = 1000;
         Job[] jobs = new Job[numJobs];
 
@@ -132,7 +132,7 @@ public class WorkerManager {
 
         JobQueue queue = new JobQueue();
 
-        AggregatorSender sender = new AggregatorSender() {
+        AggregatorSender sender = new AggregatorSender(null, 0) {
             private long startTime = System.currentTimeMillis();
             private int jobsDone = 0;
             private Semaphore counterSemaphore = new Semaphore(1);
@@ -161,7 +161,7 @@ public class WorkerManager {
             }
         };
 
-        WorkerManager manager = new WorkerManager(queue, sender, 8);
+        WorkerManager manager = new WorkerManager(queue, sender, 4);
         manager.setAllowedCPUUsage(4f);
 
 
