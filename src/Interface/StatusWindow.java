@@ -52,11 +52,11 @@ public class StatusWindow extends JFrame {
     }
 
     public void setPendingJobsText(String text) {
-        cpuUtilTextArea.setText(text);
+        pendingJobsTextArea.setText(text);
     }
 
     public String getPendingJobsText() {
-        return cpuUtilTextArea.getText();
+        return pendingJobsTextArea.getText();
     }
 
     private void createCPUUtilTextArea() {
