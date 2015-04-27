@@ -27,7 +27,7 @@ public class ResultsWindow extends JFrame {
     }
 
     private void createNoneditableTextArea() {
-        resultTextArea = new JTextArea();
+        resultTextArea = new JTextArea(5, 20);
         resultTextArea.setEditable(false);
         resultTextArea.setVisible(true);
         controlPanel.add(resultTextArea);
