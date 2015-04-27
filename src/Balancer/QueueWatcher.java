@@ -10,7 +10,7 @@ import java.util.Observable;
 public class QueueWatcher extends Observable{
 
     private long waitPeriod = 200;
-    private int waitsBetweenPulls = 500;
+    private int waitsBetweenPulls = 25;
     private int currentWaits = 0;
     private JobRequester requester;
     private JobQueue queue;
