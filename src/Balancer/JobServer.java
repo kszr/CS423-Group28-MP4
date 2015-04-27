@@ -22,6 +22,17 @@ public class JobServer {
     public JobServer(int portNumber, JobQueue queue) {
         this.portNumber = portNumber;
         this.queue = queue;
+
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                serve();
+            }
+        };
+
+        new Thread(runnable).run();
+
     }
 
     public void serve() {

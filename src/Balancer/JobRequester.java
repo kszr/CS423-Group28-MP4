@@ -5,7 +5,6 @@ import Jobs.JobQueue;
 import Utilities.AutoMutex;
 
 import java.io.EOFException;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.zip.GZIPInputStream;
@@ -27,7 +26,7 @@ public class JobRequester {
         this.queue = queue;
     }
 
-    public void Request() {
+    public void request() {
 
         System.out.println("Balancer.JobRequester opening connection to " + serverAddress + " at port " + serverPort);
 
@@ -90,8 +89,8 @@ public class JobRequester {
             @Override
             public void run() {
                 JobRequester requester = new JobRequester("localhost", port, requesterQueue);
-                requester.Request();
-                requester.Request();
+                requester.request();
+                requester.request();
             }
         };
 
