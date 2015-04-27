@@ -66,6 +66,8 @@ public class Adapter {
         jobRequester = new JobRequester(otherAddress, otherJobServerPort, jobQueue);
 
         if (isAggregator) {
+            System.out.println("This is the aggregator.");
+
             jobAggregator = new JobAggregator(aggregatorPort, numJobs);
             openStatusWindow();
         }
@@ -76,6 +78,7 @@ public class Adapter {
         hardwareMonitor = new HardwareMonitor(workerManager);
 
         if (startsJobs) {
+            System.out.println("This is the job producer.");
             JobSplitter splitter = new JobSplitter(numElements, numJobs);
             for (Job job : splitter) {
                 jobQueue.addJob(job);

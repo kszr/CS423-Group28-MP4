@@ -17,6 +17,8 @@ public class JobSplitter implements Iterable<Job>{
 
     private Job getJob(int i) {
 
+        System.out.println("Splitter making job of index " + i);
+
         Job job = new Job();
 
         job.index = i;
