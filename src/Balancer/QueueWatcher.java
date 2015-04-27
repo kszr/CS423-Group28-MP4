@@ -9,7 +9,9 @@ import java.util.Observable;
  */
 public class QueueWatcher extends Observable{
 
-    private long waitPeriod = 10000;
+    private long waitPeriod = 200;
+    private int waitsBetweenPulls = 500;
+    private int currentWaits = 0;
     private JobRequester requester;
     private JobQueue queue;
 
@@ -43,7 +45,14 @@ public class QueueWatcher extends Observable{
         }
 
         if (newJobCount == 0) {
-            requester.request();
+            if (currentWaits > waitsBetweenPulls) {
+                requester.request();
+                currentWaits = 0;
+            } else {
+                currentWaits++;
+            }
+        } else {
+            currentWaits = Integer.MAX_VALUE;
         }
 
         if (newJobCount != lastJobCount) {
