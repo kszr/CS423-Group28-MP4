@@ -12,24 +12,13 @@ import java.util.Observer;
  */
 public class StatusWindowController implements Observer {
     private StatusWindow statusWindow;
-    private JobServer jobServer;
-    private JobAggregator jobAggregator;
-    private HardwareMonitor hardwareMonitor;
 
-    public StatusWindowController(JobAggregator jobAggregator,
-                                  JobServer jobServer,
-                                  HardwareMonitor hardwareMonitor) {
-        this.jobAggregator = jobAggregator;
-        this.jobServer = jobServer;
-
+    public StatusWindowController() {
         openStatusWindow();
     }
 
     private void openStatusWindow() {
         statusWindow = new StatusWindow();
-        statusWindow.setThrottleText(Double.toString(hardwareMonitor.getThrottlingValue()));
-        statusWindow.setNumJobsText(jobAggregator.getCompletedCount() +
-                " jobs completed out of " + jobAggregator.getTotalCount());
     }
 
     @Override

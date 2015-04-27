@@ -68,6 +68,7 @@ public class Adapter {
         jobRequester = new JobRequester(otherAddress, otherJobServerPort, jobQueue);
         System.out.println("Job Requester created.");
 
+        hardwareMonitor = new HardwareMonitor(workerManager);
         if (isAggregator) {
             System.out.println("This is the aggregator.");
 
@@ -78,7 +79,6 @@ public class Adapter {
 
         workerManager = new WorkerManager(jobQueue, aggregatorSender, numWorkerThreads);
 
-        hardwareMonitor = new HardwareMonitor(workerManager);
 
         if (startsJobs) {
             System.out.println("This is the job producer.");
@@ -97,8 +97,7 @@ public class Adapter {
      * Opens a window that displays statuses.
      */
     public void openStatusWindow() {
-        StatusWindowController statusWindowController = new StatusWindowController(jobAggregator,
-                jobServer, hardwareMonitor);
+        StatusWindowController statusWindowController = new StatusWindowController();
 
         System.out.println("OpenStatusWindow");
 
