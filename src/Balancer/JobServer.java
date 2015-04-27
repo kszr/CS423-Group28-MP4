@@ -42,8 +42,6 @@ public class JobServer extends Observable {
 
             while (true) {
                 talk(listener);
-                setChanged();
-                notifyObservers();
             }
 
         } catch (IOException e) {
@@ -66,6 +64,10 @@ public class JobServer extends Observable {
             int jobsTaken = 0;
             while (sendJob(jobsTaken, objStream)) {
                 System.out.println("Sent job");
+
+                setChanged();
+                notifyObservers();
+
                 jobsTaken++;
             }
 

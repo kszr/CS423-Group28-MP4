@@ -44,7 +44,7 @@ public class JobRequester {
 
                 try (AutoMutex mutex = queue.holdMutex()) {
                     queue.addJob(job);
-                    System.out.println("Jobs.Job received:" + job.toString());
+                    System.out.println("Jobs.Job received:" + job.index);
                 }
 
                 System.out.println("Balancer.JobRequester received job");
