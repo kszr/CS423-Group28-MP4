@@ -20,6 +20,7 @@ import Worker.WorkerManager;
 public class Adapter {
 
     // Set these before calling Setup()
+    public boolean startsJobs;
     public int numElements = 1024 * 1024 * 32;
     public int numJobs = 512;
 
@@ -51,10 +52,11 @@ public class Adapter {
     private JobAggregator jobAggregator; // null iff isAggregator == false
 
 
-    public Adapter(String otherAddress, String aggregatorAddress, boolean isAggregator) {
+    public Adapter(String otherAddress, String aggregatorAddress, boolean isAggregator, boolean startsJobs) {
         this.otherAddress = otherAddress;
         this.aggregatorAddress = aggregatorAddress;
         this.isAggregator = isAggregator;
+        this.startsJobs = startsJobs;
     }
 
     public void setup() {
@@ -73,9 +75,11 @@ public class Adapter {
 
         hardwareMonitor = new HardwareMonitor(workerManager);
 
-        JobSplitter splitter = new JobSplitter(numElements, numJobs);
-        for (Job job : splitter) {
-            jobQueue.addJob(job);
+        if (startsJobs) {
+            JobSplitter splitter = new JobSplitter(numElements, numJobs);
+            for (Job job : splitter) {
+                jobQueue.addJob(job);
+            }
         }
 
         queueWatcher = new QueueWatcher(jobQueue, jobRequester);
