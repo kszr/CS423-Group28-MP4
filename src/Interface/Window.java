@@ -64,16 +64,4 @@ public class Window extends JFrame {
     public void addSubmitActionListener(ActionListener listener) {
         button.addActionListener(listener);
     }
-
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                Window ex = new Window();
-                ex.setVisible(true);
-            }
-        });
-    }
 }
