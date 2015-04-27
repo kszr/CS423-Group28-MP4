@@ -24,10 +24,12 @@ public class ResultsWindow extends JFrame {
         this.setVisible(true);
 
         createNoneditableTextArea();
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     private void createNoneditableTextArea() {
-        resultTextArea = new JTextArea();
+        resultTextArea = new JTextArea(5, 20);
         resultTextArea.setEditable(false);
         resultTextArea.setVisible(true);
         controlPanel.add(resultTextArea);
