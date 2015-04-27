@@ -68,6 +68,8 @@ public class Adapter {
         jobRequester = new JobRequester(otherAddress, otherJobServerPort, jobQueue);
         System.out.println("Job Requester created.");
 
+        aggregatorSender = new AggregatorSender(aggregatorAddress, aggregatorPort);
+
         workerManager = new WorkerManager(jobQueue, aggregatorSender, numWorkerThreads);
 
         hardwareMonitor = new HardwareMonitor(workerManager);
@@ -77,7 +79,6 @@ public class Adapter {
             jobAggregator = new JobAggregator(aggregatorPort, numJobs);
             openStatusWindow();
         }
-        aggregatorSender = new AggregatorSender(aggregatorAddress, aggregatorPort);
 
         if (startsJobs) {
             System.out.println("This is the job producer.");
