@@ -22,6 +22,7 @@ public class JobQueue {
 
     private Queue<Job> jobs = new LinkedList<>();
 
+
     public Job popJob() {
         return jobs.poll();
     }
@@ -30,17 +31,20 @@ public class JobQueue {
         return jobs.size();
     }
 
-    public void addJob(Job job) {
+    public void addJob(final Job job) {
+
+//        System.out.println("Queue adding job " + job.index);
 
         boolean shouldAdd = true;
 
-        if (watcher != null) {
+        if (watcher!= null) {
             shouldAdd = !watcher.incomingJob(job);
         }
 
         if (shouldAdd) {
             jobs.add(job);
         }
+
     }
 
     public AutoMutex holdMutex() {

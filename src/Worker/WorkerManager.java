@@ -7,6 +7,7 @@ import Utilities.AutoMutex;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -56,9 +57,11 @@ public class WorkerManager {
         try (AutoMutex mutex = new AutoMutex(nappingSemaphore)) {
 
             if (nappingWorkers.size() == 0) {
+//                System.out.println("No current worker to deal with job " + job.index);
                 return false;
             }
 
+//            System.out.println("Giving job to worker. Index: " + job.index);
             Worker worker = nappingWorkers.poll();
             worker.giveJob(job);
 
@@ -110,7 +113,7 @@ public class WorkerManager {
 
     public static void main(String[] args) {
 
-        final int numJobs = 1024;
+        final int numJobs = 1000*100;
         int dataLength = 1000;
         Job[] jobs = new Job[numJobs];
 
@@ -122,7 +125,7 @@ public class WorkerManager {
             Job job = new Job();
             job.completed = false;
             job.data = data;
-            job.index = i*dataLength;
+            job.index = i;
 
             jobs[i] = job;
         }
@@ -142,7 +145,7 @@ public class WorkerManager {
                     e.printStackTrace();
                 }
                 jobsDone++;
-                System.out.println("Job aggregated: " + job.index + " Total: " + jobsDone);
+//                System.out.println("Job aggregated: " + job.index + " Total: " + jobsDone);
 
 
                 if (jobsDone == numJobs) {
@@ -159,9 +162,15 @@ public class WorkerManager {
         };
 
         WorkerManager manager = new WorkerManager(queue, sender, 8);
+        manager.setAllowedCPUUsage(4f);
+
 
         for (Job job : jobs) {
-            queue.addJob(job);
+            try (AutoMutex mutex = queue.holdMutex()) {
+                queue.addJob(job);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         try {

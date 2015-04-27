@@ -13,7 +13,7 @@ public class Worker {
     private final WorkerManager manager;
 
     private long lastRest;
-    private int numPerRest = 1000;
+    private int numPerRest = 1000000;
     private int numSinceRest = 0;
 
     /**
@@ -30,12 +30,12 @@ public class Worker {
      */
     public void giveJob(final Job job) {
 
-        System.out.println("Starting thread with job: " + job.index);
+//        System.out.println("Starting thread with job: " + job.index);
 
         Runnable run = new Runnable() {
             @Override
             public void run() {
-                System.out.println("Thread started with job:" + job.index);
+//                System.out.println("Thread started with job:" + job.index);
 
                 lastRest = System.currentTimeMillis();
                 Job toDo = job;
@@ -44,7 +44,7 @@ public class Worker {
                     toDo = manager.reportCompletion(Worker.this, toDo);
                 } while (toDo != null);
 
-                System.out.println("Thread ended that began with job " + job.index);
+//                System.out.println("Thread ended that began with job " + job.index);
             }
         };
 
@@ -58,7 +58,7 @@ public class Worker {
 
         // Throttling is based roughly on http://stackoverflow.com/a/1205300
 
-        System.out.println("Starting job: " + job.index);
+//        System.out.println("Starting job: " + job.index);
 
         for (int i = 0; i < job.data.length; i++) {
             job.data[i] += 1.111111f;
@@ -66,7 +66,7 @@ public class Worker {
         }
 
         job.completed = true;
-        System.out.println("Finished job: " + job.index);
+//        System.out.println("Finished job: " + job.index);
 
     }
 
@@ -84,17 +84,20 @@ public class Worker {
 
 
             long currentTime = System.currentTimeMillis();
-            lastRest = currentTime;
 
             long runTime = currentTime - lastRest;
 
-            long sleepTime = (long) (runTime * (1.0f - percentage));
+            long sleepTime = (long) ((1f-percentage)*runTime/percentage);
+
+//            System.out.println("Run time: " + runTime + " Sleep time: " + sleepTime);
 
             try {
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            lastRest = System.currentTimeMillis();
 
         }
     }
