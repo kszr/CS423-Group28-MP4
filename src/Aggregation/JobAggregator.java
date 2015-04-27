@@ -24,6 +24,24 @@ public class JobAggregator {
     public JobAggregator(int port, int jobCount) {
         this.port = port;
         completedJobs = new Job[jobCount];
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                serve();
+            }
+        };
+
+        new Thread(runnable).run();
+
+    }
+
+    public int getCompletedCount() {
+        return jobsReceived;
+    }
+
+    public int getTotalCount() {
+        return completedJobs.length;
     }
 
     public void serve() {
