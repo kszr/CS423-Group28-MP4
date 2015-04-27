@@ -7,6 +7,7 @@ import Interface.*;
 
 /**
  * Created by abhishekchatterjee on 4/26/15.
+ * Monitors hardware usage, including CPU utilization.
  */
 public class HardwareMonitor {
     private double throttle;
@@ -18,10 +19,18 @@ public class HardwareMonitor {
         throttle = 1.0;
     }
 
+    public void setThrottlingValue(double throttle) {
+        this.throttle = throttle;
+    }
+
     public double getThrottlingValue() {
         return throttle;
     }
 
+    /**
+     * Get information about hardware usage.
+     * @return
+     */
     public HardwareInfo getHardwareInfo() {
         HardwareInfo info = new HardwareInfo();
 
@@ -34,12 +43,8 @@ public class HardwareMonitor {
         return info;
     }
 
-    public void setThrottlingValue(double throttle) {
-        this.throttle = throttle;
-    }
-
     /**
-     * Gets the CPU utilization
+     * Gets the CPU utilization.
      * Source: http://stackoverflow.com/a/21962037/1843968
      * @return
      * @throws MalformedObjectNameException
@@ -71,10 +76,5 @@ public class HardwareMonitor {
         window.setVisible(true);
         window.updateThrottlingValue(throttle);
         Controller controller = new Controller(this, window);
-    }
-
-    public static void main(String[] args) {
-        HardwareMonitor hm = new HardwareMonitor();
-        hm.openInterface();
     }
 }
