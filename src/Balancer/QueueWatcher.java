@@ -55,11 +55,9 @@ public class QueueWatcher extends Observable{
             currentWaits = Integer.MAX_VALUE;
         }
 
-        if (newJobCount != lastJobCount) {
-            lastJobCount = newJobCount;
-            setChanged();
-            notifyObservers(lastJobCount);
-        }
+        lastJobCount = newJobCount;
+        setChanged();
+        notifyObservers(lastJobCount);
 
         try {
             Thread.sleep(waitPeriod);
