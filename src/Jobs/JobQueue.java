@@ -1,5 +1,8 @@
 package Jobs;
 
+import Utilities.AutoMutex;
+import Worker.WorkerManager;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
@@ -15,6 +18,8 @@ public class JobQueue {
 
     public final Semaphore semaphore = new Semaphore(1);
 
+    public WorkerManager watcher;
+
     private Queue<Job> jobs = new LinkedList<>();
 
     public Job popJob() {
@@ -26,11 +31,20 @@ public class JobQueue {
     }
 
     public void addJob(Job job) {
-        jobs.add(job);
+
+        boolean shouldAdd = true;
+
+        if (watcher != null) {
+            shouldAdd = !watcher.incomingJob(job);
+        }
+
+        if (shouldAdd) {
+            jobs.add(job);
+        }
     }
 
-    public JobQueueAccess getAccess() {
-        return new JobQueueAccess(this);
+    public AutoMutex holdMutex() {
+        return new AutoMutex(semaphore);
     }
 
 }

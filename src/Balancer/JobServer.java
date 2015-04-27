@@ -2,7 +2,7 @@ package Balancer;
 
 import Jobs.Job;
 import Jobs.JobQueue;
-import Jobs.JobQueueAccess;
+import Utilities.AutoMutex;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -57,7 +57,7 @@ public class JobServer {
             }
 
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -66,9 +66,9 @@ public class JobServer {
     }
 
 
-    private boolean sendJob(int currentNumber, ObjectOutputStream stream) throws IOException {
+    private boolean sendJob(int currentNumber, ObjectOutputStream stream) throws Exception {
         Job gotten;
-        try (JobQueueAccess access = queue.getAccess()) {
+        try (AutoMutex mutex = queue.holdMutex()) {
             if ((queue.numJobs() + currentNumber) / 2 <= currentNumber) {
                 return false;
             }

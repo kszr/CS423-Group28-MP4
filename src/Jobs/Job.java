@@ -9,14 +9,18 @@ import java.util.Arrays;
 public class Job implements Serializable{
 
     public boolean completed;
-    public int length;
+
+    /**
+     * The starting index of this data
+     */
+    public int index;
     public float[] data;
 
     @Override
     public String toString() {
         return "Jobs.Job{" +
                 "completed=" + completed +
-                ", length=" + length +
+                ", index=" + index +
                 ", data=" + Arrays.toString(data) +
                 '}';
     }

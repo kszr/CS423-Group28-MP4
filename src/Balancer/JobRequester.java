@@ -2,7 +2,7 @@ package Balancer;
 
 import Jobs.Job;
 import Jobs.JobQueue;
-import Jobs.JobQueueAccess;
+import Utilities.AutoMutex;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class JobRequester {
 
                 Job job = (Job) stream.readObject();
 
-                try (JobQueueAccess access = queue.getAccess()) {
+                try (AutoMutex mutex = queue.holdMutex()) {
                     queue.addJob(job);
                     System.out.println("Jobs.Job received:" + job.toString());
                 }
@@ -55,7 +55,7 @@ public class JobRequester {
 
         } catch (EOFException e) {
             System.out.println("Balancer.JobRequester has no more jobs to read.");
-        } catch (IOException|ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -81,7 +81,7 @@ public class JobRequester {
             Job job = new Job();
             job.completed = false;
             job.data = data;
-            job.length = dataLength;
+            job.index = i*dataLength;
 
             serverQueue.addJob(job);
         }
