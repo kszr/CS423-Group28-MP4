@@ -7,14 +7,14 @@ import java.awt.event.ActionListener;
 /**
  * Created by abhishekchatterjee on 4/26/15.
  */
-public class Window extends JFrame {
+public class HardwareWindow extends JFrame {
     private JPanel controlPanel;
     private JLabel infoLabel;
     private JLabel throtLabel;
     private JButton button;
     private JTextField throtText;
 
-    public Window() {
+    public HardwareWindow() {
         initUI();
     }
 
