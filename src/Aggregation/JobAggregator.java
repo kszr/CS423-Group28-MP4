@@ -1,5 +1,6 @@
 package Aggregation;
 
+import Interface.ResultsWindow;
 import Jobs.Job;
 
 import java.io.IOException;
@@ -85,12 +86,26 @@ public class JobAggregator {
             }
         }
 
+        /*
         System.out.println("Minimum value is " + minVal + " and maximum value is " + maxVal +
-                "\nDifference is " + (maxVal-minVal));
+                "\nDifference is " + (maxVal-minVal));*/
 
+        double difference = maxVal-minVal;
+        displayResult(difference);
     }
 
+    /**
+     * Displays the result in a window.
+     * @param difference
+     */
+    private void displayResult(double difference) {
+        ResultsWindow resultsWindow = new ResultsWindow();
 
+        String resultText;
+        if(difference < 0.00001)
+            resultText = "Successful";
+        else resultText = "Unsuccessful";
 
-
+        resultsWindow.setResultText(resultText);
+    }
 }
