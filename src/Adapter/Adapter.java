@@ -18,19 +18,19 @@ import Worker.WorkerManager;
 public class Adapter {
 
     // Set these before calling Setup()
-    public int numElements;
-    public int numJobs;
+    public int numElements = 1024 * 1024 * 32;
+    public int numJobs = 512;
 
-    public int numWorkerThreads;
+    public int numWorkerThreads = 8;
 
-    public int ownJobServerPort;
+    public int ownJobServerPort = 9834;
 
     public String otherAddress;
-    public int otherJobServerPort;
+    public int otherJobServerPort = 9834;
 
     public boolean isAggregator;
     public String aggregatorAddress;
-    public int aggregatorPort;
+    public int aggregatorPort = 9835;
 
 
     // Created during Setup();
@@ -49,10 +49,10 @@ public class Adapter {
     private JobAggregator jobAggregator; // null iff isAggregator == false
 
 
-
-    public Adapter() {
-
-
+    public Adapter(String otherAddress, String aggregatorAddress, boolean isAggregator) {
+        this.otherAddress = otherAddress;
+        this.aggregatorAddress = aggregatorAddress;
+        this.isAggregator = isAggregator;
     }
 
     public void setup() {
