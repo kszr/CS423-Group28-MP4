@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
  * Created by abhishekchatterjee on 4/26/15.
  */
 public class Controller {
-    private Window window;
+    private HardwareWindow window;
     private HardwareMonitor hardwareMonitor;
 
-    public Controller(HardwareMonitor hardwareMonitor, Window window) {
+    public Controller(HardwareMonitor hardwareMonitor, HardwareWindow window) {
         this.hardwareMonitor = hardwareMonitor;
         this.window = window;
 

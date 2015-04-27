@@ -72,7 +72,7 @@ public class HardwareMonitor {
      * the user to set throttling values.
      */
     public void openInterface() {
-        Window window = new Window();
+        HardwareWindow window = new HardwareWindow();
         window.setVisible(true);
         window.updateThrottlingValue(throttle);
         Controller controller = new Controller(this, window);
