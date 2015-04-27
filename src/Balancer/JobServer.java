@@ -42,6 +42,7 @@ public class JobServer extends Observable {
 
             while (true) {
                 talk(listener);
+                setChanged();
                 notifyObservers();
             }
 
