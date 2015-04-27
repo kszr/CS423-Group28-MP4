@@ -104,7 +104,7 @@ public class Adapter {
      * Opens a window that displays statuses.
      */
     private void openStatusWindow() {
-        StatusWindowController statusWindowController = new StatusWindowController(jobAggregator == null);
+        StatusWindowController statusWindowController = new StatusWindowController(jobAggregator != null);
 
         System.out.println("OpenStatusWindow");
 
