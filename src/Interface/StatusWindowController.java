@@ -38,7 +38,7 @@ public class StatusWindowController implements Observer {
                 statusWindow.appendTransferText("Throttle value updated.");
             }
         } else if(o instanceof JobServer) {
-            statusWindow.appendTransferText("Initiating a transfer.");
+            statusWindow.appendTransferText("Sent job.");
         } else if(o instanceof QueueWatcher) {
             statusWindow.setPendingJobsText(Integer.toString((int) arg));
         } else if(o instanceof JobAggregator) {
