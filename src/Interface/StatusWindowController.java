@@ -35,11 +35,11 @@ public class StatusWindowController implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof HardwareMonitor) {
-            statusWindow.setThrottleText(Double.toString(((HardwareMonitor) arg).getThrottlingValue()));
+            statusWindow.setThrottleText(Double.toString(((HardwareMonitor) o).getThrottlingValue()));
             statusWindow.appendTransferText("Throttle value updated.");
         } else if(arg instanceof JobAggregator) {
-            statusWindow.setNumJobsText(((JobAggregator) arg).getCompletedCount() +
-                    " jobs completed out of " + ((JobAggregator) arg).getTotalCount());
+            statusWindow.setNumJobsText(((JobAggregator) o).getCompletedCount() +
+                    " jobs completed out of " + ((JobAggregator) o).getTotalCount());
         } else if(arg instanceof JobServer) {
             statusWindow.appendTransferText("Initiating a transfer.");
         }
