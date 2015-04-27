@@ -39,7 +39,7 @@ public class StatusWindow extends JFrame {
     }
 
     private void createPendingJobsTextArea() {
-        JLabel pendingJobsLabel = new JLabel("Jobs awaiting processing");
+        JLabel pendingJobsLabel = new JLabel("Local queue");
         controlPanel.add(pendingJobsLabel);
 
         pendingJobsTextArea = new JTextArea(1, 30);
