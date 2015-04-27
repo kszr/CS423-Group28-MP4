@@ -94,6 +94,8 @@ public class Adapter {
         StatusWindowController statusWindowController = new StatusWindowController(jobAggregator,
                 jobServer, hardwareMonitor);
 
+        System.out.println("OpenStatusWindow");
+
         hardwareMonitor.addObserver(statusWindowController);
         jobAggregator.addObserver(statusWindowController);
         jobServer.addObserver(statusWindowController);
