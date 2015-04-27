@@ -13,9 +13,15 @@ import java.util.Observer;
  */
 public class StatusWindowController implements Observer {
     private StatusWindow statusWindow;
+    private boolean isAggregator;
 
-    public StatusWindowController() {
+    public StatusWindowController(boolean isAggregator) {
         openStatusWindow();
+        this.isAggregator = isAggregator;
+
+        if(!isAggregator) {
+            statusWindow.setNumJobsText("N/A");
+        }
     }
 
     private void openStatusWindow() {
@@ -34,7 +40,11 @@ public class StatusWindowController implements Observer {
         } else if(o instanceof JobServer) {
             statusWindow.appendTransferText("Initiating a transfer.");
         } else if(o instanceof QueueWatcher) {
-            statusWindow.setNumJobsText(Integer.toString((int) arg));
+            statusWindow.setPendingJobsText(Integer.toString((int) arg));
+        } else if(o instanceof JobAggregator) {
+            JobAggregator jobAggregator = (JobAggregator) o;
+            statusWindow.setNumJobsText(jobAggregator.getCompletedCount() +
+                    " jobs completed out of " + jobAggregator.getTotalCount());
         }
     }
 }
