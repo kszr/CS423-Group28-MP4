@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Observable;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -14,7 +15,7 @@ import java.util.zip.GZIPInputStream;
  *
  * Created by Matthew on 4/26/2015.
  */
-public class JobAggregator {
+public class JobAggregator extends Observable {
 
     private int port;
     private Job[] completedJobs;
@@ -70,6 +71,8 @@ public class JobAggregator {
             if (completedJobs[place] == null) {
                 completedJobs[place] = received;
                 jobsReceived++;
+                setChanged();
+                notifyObservers();
                 completionCheck();
             } else {
                 throw new Exception("Received duplicate jobs with index " + place + "!");

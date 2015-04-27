@@ -7,6 +7,7 @@ import Utilities.AutoMutex;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Observable;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -14,7 +15,7 @@ import java.util.zip.GZIPOutputStream;
  *
  * Created by Matthew on 4/25/2015.
  */
-public class JobServer {
+public class JobServer extends Observable {
 
     private int portNumber;
     private JobQueue queue;
@@ -41,6 +42,7 @@ public class JobServer {
 
             while (true) {
                 talk(listener);
+                notifyObservers();
             }
 
         } catch (IOException e) {

@@ -6,6 +6,8 @@ import Balancer.JobRequester;
 import Balancer.JobServer;
 import Balancer.QueueWatcher;
 import Hardware.HardwareMonitor;
+import Interface.StatusWindow;
+import Interface.StatusWindowController;
 import Jobs.Job;
 import Jobs.JobQueue;
 import Jobs.JobSplitter;
@@ -63,6 +65,7 @@ public class Adapter {
 
         if (isAggregator) {
             jobAggregator = new JobAggregator(aggregatorPort, numJobs);
+            openStatusWindow();
         }
         aggregatorSender = new AggregatorSender(aggregatorAddress, aggregatorPort);
 
@@ -80,7 +83,21 @@ public class Adapter {
 
     }
 
+    /**
+     * Opens a window that displays statuses.
+     */
+    public void openStatusWindow() {
+        StatusWindowController statusWindowController = new StatusWindowController(jobAggregator,
+                jobServer, hardwareMonitor);
 
+        hardwareMonitor.addObserver(statusWindowController);
+        jobAggregator.addObserver(statusWindowController);
+        jobServer.addObserver(statusWindowController);
+    }
+
+    /**
+     * Opens the GUI for the Hardware Monitor.
+     */
     public void openHardwareMonitorInterface() {
         hardwareMonitor.openInterface();
     }

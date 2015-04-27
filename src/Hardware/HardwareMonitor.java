@@ -2,6 +2,8 @@ package Hardware;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
+import java.util.Observable;
+import java.util.Observer;
 
 import Interface.*;
 import Worker.WorkerManager;
@@ -10,7 +12,7 @@ import Worker.WorkerManager;
  * Created by abhishekchatterjee on 4/26/15.
  * Monitors hardware usage, including CPU utilization.
  */
-public class HardwareMonitor {
+public class HardwareMonitor extends Observable {
     private WorkerManager workerManager;
 
     /**
@@ -23,6 +25,8 @@ public class HardwareMonitor {
 
     public void setThrottlingValue(double throttle) {
         workerManager.setAllowedCPUUsage((float) throttle);
+        setChanged();
+        notifyObservers();
     }
 
     public double getThrottlingValue() {
