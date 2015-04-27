@@ -31,6 +31,8 @@ public class HardwareWindow extends JFrame {
         createEditableTextField();
         addButton();
 
+        this.setVisible(true);
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
