@@ -69,9 +69,10 @@ public class Adapter {
         System.out.println("Job Requester created.");
 
         aggregatorSender = new AggregatorSender(aggregatorAddress, aggregatorPort);
-        workerManager = new WorkerManager(jobQueue, aggregatorSender, numWorkerThreads);
-        hardwareMonitor = new HardwareMonitor(workerManager);
 
+        workerManager = new WorkerManager(jobQueue, aggregatorSender, numWorkerThreads);
+
+        hardwareMonitor = new HardwareMonitor(workerManager);
         if (isAggregator) {
             System.out.println("This is the aggregator.");
 
