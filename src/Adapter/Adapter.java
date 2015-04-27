@@ -79,8 +79,6 @@ public class Adapter {
             jobAggregator = new JobAggregator(aggregatorPort, numJobs);
         }
 
-        openGUI();
-
         if (startsJobs) {
             System.out.println("This is the job producer.");
             JobSplitter splitter = new JobSplitter(numElements, numJobs);
@@ -91,7 +89,7 @@ public class Adapter {
 
         queueWatcher = new QueueWatcher(jobQueue, jobRequester);
 
-
+        openGUI();
     }
 
     /**
