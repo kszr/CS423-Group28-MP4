@@ -49,7 +49,7 @@ public class QueueWatcher extends Observable{
         if (newJobCount != lastJobCount) {
             lastJobCount = newJobCount;
             setChanged();
-            notifyObservers();
+            notifyObservers(lastJobCount);
         }
 
         try {

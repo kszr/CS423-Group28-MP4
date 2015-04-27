@@ -14,6 +14,7 @@ import Worker.WorkerManager;
  */
 public class HardwareMonitor extends Observable {
     private WorkerManager workerManager;
+    private HardwareInfo info;
 
     /**
      * Throttling value is set to 100% by default.
@@ -21,6 +22,7 @@ public class HardwareMonitor extends Observable {
     public HardwareMonitor(WorkerManager workerManager) {
         this.workerManager = workerManager;
         workerManager.setAllowedCPUUsage(1.0f);
+        info = new HardwareInfo();
     }
 
     public void setThrottlingValue(double throttle) {
@@ -38,10 +40,10 @@ public class HardwareMonitor extends Observable {
      * @return
      */
     public HardwareInfo getHardwareInfo() {
-        HardwareInfo info = new HardwareInfo();
-
         try {
             info.cpuUtil = getCpuLoad();
+            setChanged();
+            notifyObservers(info.cpuUtil);
         } catch(Exception e) {
             return null;
         }

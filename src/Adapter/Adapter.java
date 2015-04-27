@@ -77,10 +77,9 @@ public class Adapter {
             System.out.println("This is the aggregator.");
 
             jobAggregator = new JobAggregator(aggregatorPort, numJobs);
-            openStatusWindow();
         }
 
-        openHardwareMonitorInterface();
+        openGUI();
 
         if (startsJobs) {
             System.out.println("This is the job producer.");
@@ -96,15 +95,23 @@ public class Adapter {
     }
 
     /**
+     * Opens the Graphical User Interface.
+     */
+    private void openGUI() {
+        openStatusWindow();
+        openHardwareMonitorInterface();
+    }
+
+    /**
      * Opens a window that displays statuses.
      */
-    public void openStatusWindow() {
+    private void openStatusWindow() {
         StatusWindowController statusWindowController = new StatusWindowController();
 
         System.out.println("OpenStatusWindow");
 
+        queueWatcher.addObserver(statusWindowController);
         hardwareMonitor.addObserver(statusWindowController);
-        jobAggregator.addObserver(statusWindowController);
         jobServer.addObserver(statusWindowController);
     }
 

@@ -11,6 +11,7 @@ public class StatusWindow extends JFrame {
     private JTextArea throttleTextArea;
     private JTextArea numJobsTextArea;
     private JTextArea transferTextArea;
+    private JTextArea cpuUtilTextArea;
 
     public StatusWindow() {
         initUI();
@@ -18,7 +19,7 @@ public class StatusWindow extends JFrame {
 
     private void initUI() {
         setTitle("Status");
-        setSize(400, 300);
+        setSize(400, 350);
         setLocationRelativeTo(null);
 
         controlPanel = new JPanel();
@@ -26,12 +27,30 @@ public class StatusWindow extends JFrame {
         this.add(controlPanel);
 
         createThrottleTextArea();
+        createCPUUtilTextArea();
         createNumJobsTextArea();
         createTransferTextArea();
 
         this.setVisible(true);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    private void createCPUUtilTextArea() {
+        JLabel cpuLabel = new JLabel("CPU Utilization");
+        controlPanel.add(cpuLabel);
+
+        cpuUtilTextArea = new JTextArea(1, 30);
+        cpuUtilTextArea.setEditable(false);
+        controlPanel.add(cpuUtilTextArea);
+    }
+
+    public void setCPUUtilText(String text) {
+        cpuUtilTextArea.setText(text);
+    }
+
+    public String getCPUUtilText() {
+        return cpuUtilTextArea.getText();
     }
 
     private void createThrottleTextArea() {
