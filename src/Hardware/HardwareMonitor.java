@@ -23,6 +23,23 @@ public class HardwareMonitor extends Observable {
         this.workerManager = workerManager;
         workerManager.setAllowedCPUUsage(1.0f);
         info = new HardwareInfo();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    getHardwareInfo();
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        new Thread(runnable).start();
     }
 
     public void setThrottlingValue(double throttle) {
