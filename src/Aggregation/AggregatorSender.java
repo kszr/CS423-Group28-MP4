@@ -28,6 +28,8 @@ public class AggregatorSender {
 
     public void sendJob(Job job){
 
+        System.out.println("AggregatorSender sending job " + job.index);
+
         try (Socket socket = new Socket(serverAddress, serverPort);
              GZIPOutputStream gzipped = new GZIPOutputStream(socket.getOutputStream());
              ObjectOutputStream stream = new ObjectOutputStream(gzipped)){

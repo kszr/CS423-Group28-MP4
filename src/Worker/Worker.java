@@ -58,17 +58,17 @@ public class Worker {
 
         // Throttling is based roughly on http://stackoverflow.com/a/1205300
 
-//        System.out.println("Starting job: " + job.index);
+        System.out.println("Starting job: " + job.index);
 
         for (int i = 0; i < job.data.length; i++) {
             for (int j = 0; j < 1000; j++) {
                 job.data[i] += 1.111111f;
-                restCheck();    
+                restCheck();
             }
         }
 
         job.completed = true;
-//        System.out.println("Finished job: " + job.index);
+        System.out.println("Finished job: " + job.index);
 
     }
 

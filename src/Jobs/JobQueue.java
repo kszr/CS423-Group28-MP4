@@ -33,7 +33,7 @@ public class JobQueue {
 
     public void addJob(final Job job) {
 
-//        System.out.println("Queue adding job " + job.index);
+        System.out.println("Queue adding job " + job.index);
 
         boolean shouldAdd = true;
 
