@@ -7,4 +7,8 @@ package Hardware;
  */
 public class HardwareInfo {
     public double cpuUtil;
+
+    public String toString() {
+        return "CPU Utilization: " + cpuUtil + "%";
+    }
 }
