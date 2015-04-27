@@ -45,6 +45,10 @@ public class StatusWindow extends JFrame {
         pendingJobsTextArea = new JTextArea(1, 30);
         pendingJobsTextArea.setEditable(false);
         controlPanel.add(pendingJobsTextArea);
+
+        JScrollPane scroll = new JScrollPane (transferTextArea,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        controlPanel.add(scroll);
     }
 
     public void setPendingJobsText(String text) {
@@ -62,6 +66,10 @@ public class StatusWindow extends JFrame {
         cpuUtilTextArea = new JTextArea(1, 30);
         cpuUtilTextArea.setEditable(false);
         controlPanel.add(cpuUtilTextArea);
+
+        JScrollPane scroll = new JScrollPane (transferTextArea,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        controlPanel.add(scroll);
     }
 
     public void setCPUUtilText(String text) {
