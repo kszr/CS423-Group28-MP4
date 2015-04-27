@@ -15,7 +15,7 @@ public class JobSplitter implements Iterable<Job>{
         this.jobCount = jobCount;
     }
 
-    public Job getJob(int i) {
+    private Job getJob(int i) {
 
         Job job = new Job();
 

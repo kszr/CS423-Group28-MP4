@@ -26,7 +26,7 @@ public class Controller {
                 try {
                     String text = window.getTextFieldText();
                     double throttle = Double.parseDouble(text);
-                    if(throttle > 1.0)
+                    if(throttle < 0)
                         throw new NumberFormatException("Value out of range.");
                     hardwareMonitor.setThrottlingValue(throttle);
                     window.updateThrottlingValue(throttle);

@@ -4,27 +4,29 @@ import javax.management.*;
 import java.lang.management.ManagementFactory;
 
 import Interface.*;
+import Worker.WorkerManager;
 
 /**
  * Created by abhishekchatterjee on 4/26/15.
  * Monitors hardware usage, including CPU utilization.
  */
 public class HardwareMonitor {
-    private double throttle;
+    private WorkerManager workerManager;
 
     /**
      * Throttling value is set to 100% by default.
      */
-    public HardwareMonitor() {
-        throttle = 1.0;
+    public HardwareMonitor(WorkerManager workerManager) {
+        this.workerManager = workerManager;
+        workerManager.setAllowedCPUUsage(1.0f);
     }
 
     public void setThrottlingValue(double throttle) {
-        this.throttle = throttle;
+        workerManager.setAllowedCPUUsage((float) throttle);
     }
 
     public double getThrottlingValue() {
-        return throttle;
+        return workerManager.getAllowedCPUUsage();
     }
 
     /**
@@ -74,7 +76,7 @@ public class HardwareMonitor {
     public void openInterface() {
         HardwareWindow window = new HardwareWindow();
         window.setVisible(true);
-        window.updateThrottlingValue(throttle);
+        window.updateThrottlingValue(getThrottlingValue());
         Controller controller = new Controller(this, window);
     }
 }
