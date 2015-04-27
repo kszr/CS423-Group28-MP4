@@ -24,6 +24,8 @@ public class ResultsWindow extends JFrame {
         this.setVisible(true);
 
         createNoneditableTextArea();
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     private void createNoneditableTextArea() {
