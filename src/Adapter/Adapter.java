@@ -80,6 +80,8 @@ public class Adapter {
             openStatusWindow();
         }
 
+        openHardwareMonitorInterface();
+
         if (startsJobs) {
             System.out.println("This is the job producer.");
             JobSplitter splitter = new JobSplitter(numElements, numJobs);
