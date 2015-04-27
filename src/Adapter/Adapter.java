@@ -61,9 +61,12 @@ public class Adapter {
 
     public void setup() {
         jobQueue = new JobQueue();
+        System.out.println("Queue created.");
 
         jobServer = new JobServer(ownJobServerPort, jobQueue);
+        System.out.println("Job Server created");
         jobRequester = new JobRequester(otherAddress, otherJobServerPort, jobQueue);
+        System.out.println("Job Requester created.");
 
         if (isAggregator) {
             System.out.println("This is the aggregator.");

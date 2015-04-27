@@ -32,7 +32,7 @@ public class JobServer extends Observable {
             }
         };
 
-        new Thread(runnable).run();
+        new Thread(runnable).start();
 
     }
 

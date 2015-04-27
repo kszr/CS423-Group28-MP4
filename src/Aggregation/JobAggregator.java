@@ -33,7 +33,7 @@ public class JobAggregator extends Observable {
             }
         };
 
-        new Thread(runnable).run();
+        new Thread(runnable).start();
 
     }
 
