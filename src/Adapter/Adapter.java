@@ -105,4 +105,19 @@ public class Adapter {
     public void openHardwareMonitorInterface() {
         hardwareMonitor.openInterface();
     }
+
+    /**
+     * Args:
+     * [0] Partner's address
+     * [1] Aggregator's address
+     * [2] 1 if this is the results aggregator, 0 if it is the job generator
+     * @param args
+     */
+    public static void main(String[] args) {
+
+        boolean isAggregator = 1 == Integer.parseInt(args[2]);
+        Adapter adapter = new Adapter(args[0], args[1], isAggregator, !isAggregator);
+        adapter.setup();
+
+    }
 }

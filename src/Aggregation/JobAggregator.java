@@ -68,6 +68,9 @@ public class JobAggregator extends Observable {
             Job received = (Job) stream.readObject();
 
             int place = received.index;
+
+            System.out.println("Received completed job: " + place);
+
             if (completedJobs[place] == null) {
                 completedJobs[place] = received;
                 jobsReceived++;
