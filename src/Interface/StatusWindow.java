@@ -12,6 +12,7 @@ public class StatusWindow extends JFrame {
     private JTextArea numJobsTextArea;
     private JTextArea transferTextArea;
     private JTextArea cpuUtilTextArea;
+    private JTextArea pendingJobsTextArea;
 
     public StatusWindow() {
         initUI();
@@ -19,7 +20,7 @@ public class StatusWindow extends JFrame {
 
     private void initUI() {
         setTitle("Status");
-        setSize(400, 350);
+        setSize(400, 400);
         setLocationRelativeTo(null);
 
         controlPanel = new JPanel();
@@ -29,11 +30,29 @@ public class StatusWindow extends JFrame {
         createThrottleTextArea();
         createCPUUtilTextArea();
         createNumJobsTextArea();
+        createPendingJobsTextArea();
         createTransferTextArea();
 
         this.setVisible(true);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    private void createPendingJobsTextArea() {
+        JLabel pendingJobsLabel = new JLabel("Jobs awaiting processing");
+        controlPanel.add(pendingJobsLabel);
+
+        pendingJobsTextArea = new JTextArea(1, 30);
+        pendingJobsTextArea.setEditable(false);
+        controlPanel.add(pendingJobsTextArea);
+    }
+
+    public void setPendingJobsText(String text) {
+        cpuUtilTextArea.setText(text);
+    }
+
+    public String getPendingJobsText() {
+        return cpuUtilTextArea.getText();
     }
 
     private void createCPUUtilTextArea() {
